@@ -4,36 +4,41 @@ import java.io.*;
 import java.util.UUID;
 
 public class ClientBase extends Thread {
-    private Socket client_socket;
-    private String client_id;
-    private BufferedReader in;
-    private PrintWriter out;
-    private boolean isConnected;
+    private Socket          client_socket;
+    private String          client_id;
+    private BufferedReader  in;
+    private PrintWriter     out;
+    private boolean         isConnected;
 
     public ClientBase(Socket client_socket) throws IOException {
-        this.client_socket = client_socket;
-        this.client_id = UUID.randomUUID().toString();
-        this.in = new BufferedReader(new InputStreamReader(client_socket.getInputStream()));
-        this.out = new PrintWriter(client_socket.getOutputStream(), true);
-        this.isConnected = true;
+        this.client_socket =    client_socket;
+        this.client_id =        UUID.randomUUID().toString();
+        this.in =               new BufferedReader(new InputStreamReader(client_socket.getInputStream()));
+        this.out =              new PrintWriter(client_socket.getOutputStream(), true);
+        this.isConnected =      true;
     }
 
     //Default constructor
     public ClientBase() {
-        this.client_id = "";
-        this.isConnected = false;
-    }
-
-    public void Send(String message) {
-        this.out.println(message);
+        this.client_id =    "";
+        this.isConnected =  false;
     }
 
     public String Receive() throws IOException {
         return this.in.readLine();
     }
 
-    public void Close() throws IOException {
+    public void SendPacket(Packet packet) {
+        this.getOut().write(packet.toString());
+        this.getOut().write('\n');
+        this.getOut().flush();
+    }
+
+    public void close() throws IOException {
         this.client_socket.close();
+        this.isConnected = false;
+        this.interrupt();
+        
     }
 
     public Socket getClient_socket() {

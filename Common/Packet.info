@@ -1,0 +1,6 @@
+TCP Data Packet information:
+
+Parts: 
+1. Sender Client UUID (36 bytes)
+2. Origin (1 byte - 48 (0x30) for server, 49 (0x31) for client)
+3. Payload (variable - up to 65498 Bytes ~ 65.498 KBytes)

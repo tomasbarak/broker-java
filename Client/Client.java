@@ -1,5 +1,7 @@
 package Client;
+
 import Common.ClientBase;
+import Common.Packet;
 import java.net.Socket;
 import java.io.*;
 
@@ -10,6 +12,7 @@ public class Client extends ClientBase {
         this.start();
     }
 
+    @Override
     public void run() {
         while (!(this.getClient_socket().isClosed())) {
             // Listen for messages from the client
@@ -17,7 +20,8 @@ public class Client extends ClientBase {
                 String message = this.getIn().readLine();
                 if (message != null) {
                     this.setConnected(true);
-                    System.out.println("Server --> " + this.getClient_id() + ": " + message);
+                    Packet received_packet = Packet.fromString(message);
+                    System.out.println(received_packet.getId() + " --> " + this.getClient_id() + ": " + received_packet.getData());
                 } else {
                     this.setConnected(false);
                     this.getClient_socket().close();

@@ -11,9 +11,10 @@ public class ClientsCleaner extends Thread {
     public void run() {
         while (!(server.getServer_socket().isClosed())) {
             HashSet<Client> connected_clients_copy = new HashSet<Client>(server.getConnected_clients());
+            HashSet<Client> connected_clients_copy_reference = new HashSet<Client>(connected_clients_copy);
             //System.out.print("\033[H\033[2J");
             //System.out.println("Connected clients: " + connected_clients_copy.size());
-            for (Client client : server.getConnected_clients()) {
+            for (Client client : connected_clients_copy_reference) {
                 if (client.getClient_socket().isClosed()) {
                     connected_clients_copy.remove(client);
                 }
@@ -22,7 +23,7 @@ public class ClientsCleaner extends Thread {
             server.setConnected_clients(connected_clients_copy);
 
             try{
-                this.sleep(500);
+                this.sleep(1000);
             }catch(InterruptedException e){
                 e.printStackTrace();
             }

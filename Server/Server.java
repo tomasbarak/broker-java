@@ -22,7 +22,6 @@ public class Server extends Thread {
                 Socket client_socket = this.server_socket.accept();
                 Client client = new Client(client_socket);
                 this.connected_clients.add(client);
-                PrintWriter out = new PrintWriter(client_socket.getOutputStream(), true);
             } catch (IOException e) {
                 e.printStackTrace();
             }
