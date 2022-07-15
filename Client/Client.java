@@ -21,13 +21,22 @@ public class Client extends ClientBase {
                 if (message != null) {
                     this.setConnected(true);
                     Packet received_packet = Packet.fromString(message);
-                    System.out.println(received_packet.getId() + " --> " + this.getClient_id() + ": " + received_packet.getData());
+                    //System.out.println(received_packet.getId() + " --> " + this.getClient_id() + ": " + received_packet.getData());
                 } else {
                     this.setConnected(false);
                     this.getClient_socket().close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+
+            //Random disconnection
+            if (Math.random() < 0.1) {
+                try {
+                    this.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

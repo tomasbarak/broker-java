@@ -22,7 +22,7 @@ public class Client extends ClientBase {
                 if (message != null) {
                     this.setConnected(true);
                     Packet received_packet = Packet.fromString(message);
-                    System.out.println(this.getClient_id() +" <-- " + received_packet.getId() + ": " + received_packet.getData());
+                    //System.out.println(this.getClient_id() +" <-- " + received_packet.getId() + ": " + received_packet.getData());
                     Packet packet = new Packet(
                             this.getClient_id(),
                             '1',

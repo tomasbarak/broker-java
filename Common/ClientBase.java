@@ -66,7 +66,7 @@ public class ClientBase extends Thread {
     }
 
     public boolean isConnected() {
-        return isConnected;
+        return this.isConnected;
     }
 
     public void setConnected(boolean isConnected) {
