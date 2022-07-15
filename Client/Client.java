@@ -12,32 +12,24 @@ public class Client extends ClientBase {
         this.start();
     }
 
-    @Override
+    @Override    //no pelotudo
     public void run() {
-        while (!(this.getClient_socket().isClosed())) {
+        while (this.isConnected()) {
             // Listen for messages from the client
             try {
                 String message = this.getIn().readLine();
                 if (message != null) {
                     this.setConnected(true);
                     Packet received_packet = Packet.fromString(message);
-                    //System.out.println(received_packet.getId() + " --> " + this.getClient_id() + ": " + received_packet.getData());
+                    System.out.println(received_packet.getId() + " --> " + this.getClient_id() + ": " + received_packet.getData());
+                    //this.close();
                 } else {
-                    this.setConnected(false);
-                    this.getClient_socket().close();
+                    this.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            //Random disconnection
-            if (Math.random() < 0.1) {
-                try {
-                    this.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 }

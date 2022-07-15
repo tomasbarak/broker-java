@@ -1,7 +1,5 @@
 package Common;
 
-import java.io.ByteArrayOutputStream;
-
 public class Packet {
     private String id; // 36 bytes
     private Character origin; // Server or Client (1 bytes) 0 = Server, 1 = Client

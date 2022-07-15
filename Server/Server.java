@@ -9,14 +9,11 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Server extends Thread {
     private ServerSocket server_socket;
     private HashSet<Client> connected_clients;
-    private ClientsCleaner cleaner;
     private ReentrantLock lock = new ReentrantLock(true);
 
     public void init(int port) throws IOException {
         this.server_socket = new ServerSocket(port);
         this.connected_clients = new HashSet<Client>();
-        this.cleaner = new ClientsCleaner(this);
-        this.cleaner.start();
         this.start();
     }
 
@@ -26,7 +23,7 @@ public class Server extends Thread {
             try {
                 lock.lock();
                 Socket client_socket = this.server_socket.accept();
-                Client client = new Client(client_socket);
+                Client client = new Client(client_socket, this);
                 HashSet<Client> connected_clients_copy = this.connected_clients;
                 connected_clients_copy.add(client);
                 this.setConnected_clients(connected_clients_copy);

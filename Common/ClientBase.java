@@ -21,7 +21,7 @@ public class ClientBase extends Thread {
     //Default constructor
     public ClientBase() {
         this.client_id =    "";
-        this.isConnected =  false;
+        this.isConnected =  true;
     }
 
     public String Receive() throws IOException {
